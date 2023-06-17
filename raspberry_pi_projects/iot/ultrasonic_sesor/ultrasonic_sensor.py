@@ -1,21 +1,30 @@
-import RPi.GPIO as GPIO 
 import time
+import RPi.GPIO as GPIO
+from hcsr04 import HCSR04
+from mqtt_handler import MQTTHANDLER
 
+def main():
+    print("Iniciando...")
+    try:
+        mqtt_handler = MQTTHANDLER()       
+        hcsr04 = HCSR04(trigger=16, echo=18)        
+        while True:
+            distance = hcsr04.calculate_distance()
+            send_message_broker(mqtt_handler, distance)
+            time.sleep(2)    
+    except KeyboardInterrupt:
+        print("Interrupción del teclado. Finalizando...")    
+    except Exception as e:
+        print("Ocurrió un error:", str(e))    
+    finally:
+        hcsr04.cleanup()
+        mqtt_handler.client.disconnect()
+        GPIO.cleanup()
+        print("Finalizado correctamente!")
 
-led = 18
+def send_message_broker(mqtt_handler, distance):
+    message = str(distance)
+    mqtt_handler.send_message(message)
 
-
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(led, GPIO.OUT)
-
-while(True):    
-    GPIO.output(led, GPIO.HIGH)
-    print("Led encendido")
-    time.sleep(2)
-    GPIO.output(led, GPIO.LOW)
-    print("Led apagado")
-    time.sleep(2)
-
-GPIO.cleanup()
-
-
+if __name__ == "__main__":
+    main()
