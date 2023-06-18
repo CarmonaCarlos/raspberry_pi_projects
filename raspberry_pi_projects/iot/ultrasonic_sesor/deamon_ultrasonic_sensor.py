@@ -16,6 +16,7 @@ hcsr04 = None
 
 def cleanup_and_exit(signum, frame):
     # Perform cleanup operations
+    logging.info("Deteniendo distance_deamon...")
     hcsr04.cleanup()
     mqtt_handler.client.disconnect()
     GPIO.cleanup()
