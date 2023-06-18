@@ -1,0 +1,9 @@
+{
+    "adaFruitConfig" : {
+        "clientId" : "cm-carmona-unir", 
+        "adafruitId" : "void_21", 
+        "adafruitKey" : "aio_WWbN01YVVQTruhh7VmovJZO5iXFD", 
+        "brokerAddress" : "io.adafruit.com", 
+        "pubTopic" : "void_21/feeds/cm-carmona-unir"
+    }
+}
