@@ -9,14 +9,14 @@ class HCSR04:
 
     def __init__(self, trigger, echo):
         try:
-            logging.info("Iniciando HCSR04...")
+            logging.info("Iniciando clase HCSR04...")
             self.trigger = trigger
             self.echo = echo
             GPIO.setmode(GPIO.BOARD)
             GPIO.setup(self.trigger, GPIO.OUT, initial=GPIO.LOW)
             GPIO.setup(self.echo, GPIO.IN)
             time.sleep(0.05)
-            logging.info("¡HCSR04 iniciado correctamente!")
+            logging.info("¡HCSR04 inicio correctamente!")
         except Exception as e:
             logging.error(f"Un error ha ocurrido mientras se inicializaba HCSR04: {e}")
 
@@ -41,7 +41,7 @@ class HCSR04:
             distance = sonar_duration * self.SOUND_SPEED * 100 / 2  # Calcula la distancia en base a la duración
             distance = round(distance, 2)  # Ajusta la distancia y la redondea a dos decimales
 
-            logging.info("Distancia (cm): %s", str(distance))
+            logging.info("Distancia(cm): %s", str(distance))
 
             return distance
         except Exception as e:
