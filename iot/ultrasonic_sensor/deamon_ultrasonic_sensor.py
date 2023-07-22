@@ -8,8 +8,8 @@ import daemonize
 import signal
 import sys
 
-PATH_LOG = "/home/carlos/Documents/raspberry_pi_projects/iot/ultrasonic_sesor/distance_deamon.log"
-PATH_CONFIG = "/home/carlos/Documents/raspberry_pi_projects/iot/ultrasonic_sesor/config.json"
+PATH_LOG = "/home/carlos/Documents/raspberry_pi_projects/iot/ultrasonic_sensor/distance_deamon.log"
+PATH_CONFIG = "/home/carlos/Documents/raspberry_pi_projects/iot/ultrasonic_sensor/config.json"
 
 def cleanup_and_exit(signum, frame, mqtt_handler, hcsr04):
     # Perform cleanup operations
