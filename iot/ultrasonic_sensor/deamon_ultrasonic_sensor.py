@@ -8,7 +8,7 @@ import daemonize
 import signal
 import sys
 
-PATH_LOG = "/home/carlos/Documents/raspberry_pi_projects/iot/ultrasonic_sensor/distance_deamon.log"
+PATH_LOG = "/home/carlos/Documents/raspberry_pi_projects/iot/ultrasonic_sensor/distance_deamon_logs.log"
 PATH_CONFIG = "/home/carlos/Documents/raspberry_pi_projects/iot/ultrasonic_sensor/config.json"
 
 def cleanup_and_exit(signum, frame, mqtt_handler, hcsr04):
@@ -33,8 +33,19 @@ def main():
 
         while True:
             distance = hcsr04.calculate_distance()
-            mqtt_handler.send_message(str(distance))
-            time.sleep(2)
+            sensor_id = "sensor01"
+            display_name = "distance_sensor"
+            units = "cm"
+            message_payload = f'''
+            {{
+                "id": "{sensor_id}",
+                "name": "{display_name}",
+                "distance": {distance},
+                "units": "{units}"
+            }}
+            '''
+            mqtt_handler.send_message(str(message_payload))
+            time.sleep(1)
     except Exception as e:
         logging.error("Ocurrió un error: %s", str(e))
         logging.error(traceback.format_exc())
