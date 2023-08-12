@@ -5,5 +5,12 @@
         "adafruitKey" : "aio_WWbN01YVVQTruhh7VmovJZO5iXFD", 
         "brokerAddress" : "io.adafruit.com", 
         "pubTopic" : "void_21/feeds/cm-carmona-unir"
+    },
+    "localMQTT" : 
+    {
+        "clientId" : "cm-carmona-unir",
+        "brokerAddress" : "192.168.50.67", 
+        "brokerPort" : 1883,
+        "pubTopic" : "line1/station1/sensors/distance"
     }
 }

@@ -1,5 +1,11 @@
 import json
-from json import JSONEncoder
+
+class LocalConfig:
+    def __init__(self, clientId, brokerAddress, brokerPort, pubTopic):
+        self.clientId = clientId
+        self.brokerAddress = brokerAddress
+        self.brokerPort = brokerPort
+        self.pubTopic = pubTopic
 
 class AdaFruitConfig:
     def __init__(self, clientId, adafruitId, adafruitKey, brokerAddress, pubTopic):
@@ -10,26 +16,32 @@ class AdaFruitConfig:
         self.pubTopic = pubTopic
 
 class AppConfiguration:
-    def __init__(self, AdaFruitConfig):
-        self.AdaFruitConfig = AdaFruitConfig
+    def __init__(self, adaFruitConfig=None, localConfig=None):
+        self.AdaFruitConfig = adaFruitConfig
+        self.LocalConfig = localConfig
 
-class AppConfigurationEncoder(JSONEncoder):
+class AppConfigurationEncoder(json.JSONEncoder):
     def default(self, o):
         return o.__dict__
 
-def parse_app_adafruit_config(file_path):
+        
+def parse_app_config(file_path, config_type):
     try:
         with open(file_path, "r") as file:
             appJson = file.read()
 
         appDict = json.loads(appJson)
 
-        if "adaFruitConfig" in appDict:
-            adaFruitConfig = AdaFruitConfig(**appDict["adaFruitConfig"])
-            appConfig = AppConfiguration(AdaFruitConfig=adaFruitConfig)
+        if "adaFruitConfig" in appDict and config_type == "adafruit":
+            adaFruitConfig = AdaFruitConfig(**appDict["adaFruitConfig"])            
+            appConfig = AppConfiguration(adaFruitConfig=adaFruitConfig)
+            return appConfig
+        elif "localMQTT" in appDict and config_type == "local":
+            localConfig = LocalConfig(**appDict["localMQTT"])
+            appConfig = AppConfiguration(localConfig=localConfig)
             return appConfig
         else:
-            raise KeyError("adaFruitConfig not found in the JSON")
+            raise KeyError("adaFruitConfig or localMQTT not found in the JSON")
 
     except FileNotFoundError as e:
         print(f"File '{file_path}' not found.")

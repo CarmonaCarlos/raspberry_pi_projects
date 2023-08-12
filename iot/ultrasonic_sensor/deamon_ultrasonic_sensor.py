@@ -3,7 +3,7 @@ import logging
 import traceback
 import RPi.GPIO as GPIO
 from hcsr04 import HCSR04
-from mqtt_handler import MQTTHANDLER
+from mqtt_local_handler import MQTTLOCALHANDLER
 import daemonize
 import signal
 import sys
@@ -25,7 +25,7 @@ def main():
     logging.info("Iniciando demonio distance_deamon...")
 
     try:
-        mqtt_handler = MQTTHANDLER(configPath=PATH_CONFIG)
+        mqtt_handler = MQTTLOCALHANDLER(configPath=PATH_CONFIG)
         hcsr04 = HCSR04(trigger=16, echo=18)
 
         # Register the signal handler
