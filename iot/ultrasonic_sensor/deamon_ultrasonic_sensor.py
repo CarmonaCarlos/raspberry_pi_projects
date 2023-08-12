@@ -3,7 +3,7 @@ import logging
 import traceback
 import RPi.GPIO as GPIO
 from hcsr04 import HCSR04
-from mqtt_local_handler import MQTTLOCALHANDLER
+from iot.ultrasonic_sensor.mqtt_local_handler import MQTTLOCALHANDLER
 import daemonize
 import signal
 import sys
